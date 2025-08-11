@@ -3,13 +3,15 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router"
 import { AuthLayout } from "./auth/layout/AuthLayout"
 import { LoginPage } from "./auth/pages/LoginPage"
 import { RegisterPage } from "./auth/pages/RegisterPage"
-import ChatPage from "./chat/pages/ChatPage"
 import { sleep } from "./lib/sleep"
 
 const ChatLayout = lazy(async () => {
     await sleep(1500)
     return import("./chat/layout/ChatLayout")
 })
+
+const ChatPage = lazy(async () => import("./chat/pages/ChatPage"))
+const NoChatSelectedPage = lazy(async () => import("./chat/pages/NoChatSelectedPage"))
 
 export const AppRouter = () => {
     return (
@@ -32,7 +34,8 @@ export const AppRouter = () => {
                         <ChatLayout />
                     </Suspense>
                 }>
-                    <Route index element={<ChatPage />} />
+                    <Route index element={<NoChatSelectedPage />} />
+                    <Route path="/chat/:clientId" element={<ChatPage />} />
                 </Route>
                 <Route path="/" element={<Navigate to="/auth" />} />
                 <Route path="*" element={<Navigate to="/auth" />} />

@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { useParams } from "react-router"
+
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -13,6 +15,8 @@ interface Message {
 }
 
 export default function ChatPage() {
+  const { clientId } = useParams()
+  console.log(clientId)
   const [input, setInput] = useState("")
   const [messages] = useState<Message[]>([
     {
